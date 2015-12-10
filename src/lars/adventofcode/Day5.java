@@ -1,10 +1,10 @@
 package lars.adventofcode;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.regex.Pattern;
+import java.util.stream.Stream;
 
 public class Day5 {
 
@@ -19,22 +19,8 @@ public class Day5 {
 		System.out.println(isNice("haegwjzuvuyypxyu"));
 		System.out.println(isNice("dvszwmarrgswjxmb"));
 
-		try (BufferedReader in = new BufferedReader(new FileReader(new File("input", "5.txt")))) {
-
-			int nice = 0;
-
-			String line;
-			while ((line = in.readLine()) != null) {
-
-				boolean isNice = isNice(line);
-				if (isNice) {
-					nice++;
-				}
-
-			}
-
-			System.out.println(nice);
-
+		try (Stream<String> lines = Files.lines(Paths.get("input", "5.txt"))) {
+			System.out.println(lines.filter(l -> isNice(l)).count());
 		}
 
 	}
