@@ -1,4 +1,4 @@
-package lars.adventofcode.day2;
+package lars.adventofcode;
 
 import java.io.BufferedReader;
 import java.io.File;
