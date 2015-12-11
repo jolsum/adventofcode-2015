@@ -8,16 +8,10 @@ import java.util.stream.Stream;
 
 public class Day5 {
 
-	private static final Pattern THREE_VOWELS = Pattern.compile("[a,e,i,o,u,y].*[a,e,i,o,u,y].*[a,e,i,o,u,y]");
+	private static final Pattern THREE_VOWELS = Pattern.compile("[aeiou].*[aeiou].*[aeiou]");
 	private static final Pattern DOUBLE_LETTER = Pattern.compile("([a-z])\\1");
 
 	public static void main(String[] args) throws IOException {
-
-		System.out.println(isNice("ugknbfddgicrmopn"));
-		System.out.println(isNice("aaa"));
-		System.out.println(isNice("jchzalrnumimnmhp"));
-		System.out.println(isNice("haegwjzuvuyypxyu"));
-		System.out.println(isNice("dvszwmarrgswjxmb"));
 
 		try (Stream<String> lines = Files.lines(Paths.get("input", "5.txt"))) {
 			System.out.println(lines.filter(l -> isNice(l)).count());
