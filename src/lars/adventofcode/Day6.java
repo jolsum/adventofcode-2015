@@ -10,42 +10,40 @@ public class Day6 {
 	private static enum Operation {
 		TOGGLE {
 			@Override
-			boolean apply(boolean value) {
-				return !value;
+			int apply(int value) {
+				return value + 2;
 			}
 		},
 		ON {
 			@Override
-			boolean apply(boolean value) {
-				return true;
+			int apply(int value) {
+				return value + 1;
 			}
 		},
 		OFF {
 			@Override
-			boolean apply(boolean value) {
-				return false;
+			int apply(int value) {
+				return Math.max(0, value - 1);
 			}
 		};
 
-		abstract boolean apply(boolean value);
+		abstract int apply(int value);
 	}
 
-	private static boolean[][] grid = new boolean[1000][1000];
+	private static int[][] grid = new int[1000][1000];
 
 	public static void main(String[] args) throws IOException {
 
 		try (Stream<String> lines = Files.lines(Paths.get("input", "6.txt"))) {
 			lines.forEach(l -> handleLine(l));
 
-			int count = 0;
+			int sum = 0;
 			for (int i = 0; i < grid.length; i++) {
 				for (int j = 0; j < grid[i].length; j++) {
-					if (grid[i][j]) {
-						count++;
-					}
+					sum += grid[i][j];
 				}
 			}
-			System.out.println(count);
+			System.out.println(sum);
 		}
 
 	}
