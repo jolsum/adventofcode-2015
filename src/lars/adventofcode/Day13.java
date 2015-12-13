@@ -23,6 +23,9 @@ public class Day13 {
 			lines.forEach(l -> handleLine(l));
 		}
 
+		// Part two
+		// getPerson("Lars");
+
 		Collection<List<Person>> permutations = Collections2.permutations(persons.values());
 
 		int max = Integer.MIN_VALUE;
@@ -56,6 +59,13 @@ public class Day13 {
 
 			Integer ab = left.gains.get(right);
 			Integer ba = right.gains.get(left);
+
+			if (ab == null) {
+				ab = 0;
+			}
+			if (ba == null) {
+				ba = 0;
+			}
 
 			sum += ab;
 			sum += ba;
