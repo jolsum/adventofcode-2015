@@ -12,7 +12,7 @@ public class Day12 {
 
 		String input = new String(Files.readAllBytes(Paths.get("input", "12.txt")));
 
-		System.out.println(sum);
+		System.out.println(sum(input));
 	}
 
 	private static int sum(String input) {
@@ -24,5 +24,5 @@ public class Day12 {
 		}
 		return sum;
 	}
-	
+
 }
