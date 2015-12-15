@@ -37,10 +37,11 @@ public class Day15 {
 			int durability = Math.max(0, added.keySet().stream().mapToInt(i -> i.durability * added.get(i)).sum());
 			int flavor = Math.max(0, added.keySet().stream().mapToInt(i -> i.flavor * added.get(i)).sum());
 			int texture = Math.max(0, added.keySet().stream().mapToInt(i -> i.texture * added.get(i)).sum());
+			int calories = Math.max(0, added.keySet().stream().mapToInt(i -> i.calories * added.get(i)).sum());
 
 			int res = capacity * durability * flavor * texture;
 
-			if (res > max) {
+			if (res > max /* && calories == 500 */) {
 				max = res;
 				maxCounts = new HashMap<>(added);
 			}
