@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 public class Day15 {
 
 	private static List<Ingredient> ingredients = new ArrayList<>();
-	private static int[] counts;
 
 	private static int max = Integer.MIN_VALUE;
 	private static Map<Ingredient, Integer> maxCounts;
@@ -23,7 +22,6 @@ public class Day15 {
 			lines.forEach(l -> handleLine(l));
 		}
 
-		counts = new int[ingredients.size()];
 		calculate(new HashMap<>(), ingredients, 100);
 
 		System.out.println(max + " " + maxCounts);
