@@ -38,7 +38,18 @@ public class Day16 {
 
 			boolean foundAll = true;
 			for (String prop : props.keySet()) {
-				if (properties.get(prop) != props.get(prop)) {
+				int value = properties.get(prop);
+				int auntValue = props.get(prop);
+
+				if ((prop.equals("cats") || prop.equals("trees")) && auntValue <= value) {
+					System.out.println(aunt + ": " + prop + " " + auntValue + " <= " + value);
+					foundAll = false;
+					break;
+				} else if ((prop.equals("pomeranians") || prop.equals("goldfish")) && auntValue >= value) {
+					System.out.println(aunt + ": " + prop + " " + auntValue + " >= " + value);
+					foundAll = false;
+					break;
+				} else if (value != auntValue) {
 					foundAll = false;
 					break;
 				}
