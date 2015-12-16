@@ -29,38 +29,33 @@ public class Day16 {
 		properties.put("cars", 2);
 		properties.put("perfumes", 1);
 
-		System.out.println(findAunt(properties));
+		String aunt = aunts.keySet().stream().filter(s -> matches(properties, aunts.get(s))).findAny().get();
+
+		System.out.println(aunt);
 	}
 
-	private static String findAunt(Map<String, Integer> properties) {
-		for (String aunt : aunts.keySet()) {
-			Map<String, Integer> props = aunts.get(aunt);
+	private static boolean matches(Map<String, Integer> properties, Map<String, Integer> props) {
+		for (String prop : props.keySet()) {
+			int value = properties.get(prop);
+			int auntValue = props.get(prop);
 
-			boolean foundAll = true;
-			for (String prop : props.keySet()) {
-				int value = properties.get(prop);
-				int auntValue = props.get(prop);
-
-				if (prop.equals("cats") || prop.equals("trees")) {
-					if (auntValue <= value) {
-						foundAll = false;
-						break;
-					}
-				} else if (prop.equals("pomeranians") || prop.equals("goldfish")) {
-					if (auntValue >= value) {
-						foundAll = false;
-						break;
-					}
-				} else if (value != auntValue) {
-					foundAll = false;
-					break;
+			// Part 2
+			if (prop.equals("cats") || prop.equals("trees")) {
+				if (auntValue > value) {
+					return false;
 				}
-			}
-			if (foundAll) {
-				return aunt;
+			} else if (prop.equals("pomeranians") || prop.equals("goldfish")) {
+				if (auntValue < value) {
+					return false;
+				}
+			} else
+
+			// Part 1
+			if (value != auntValue) {
+				return false;
 			}
 		}
-		return null;
+		return true;
 	}
 
 	private static void handleLine(final String line) {
