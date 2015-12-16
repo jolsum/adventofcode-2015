@@ -79,20 +79,4 @@ public class Day16 {
 		aunts.put(name, properties);
 	}
 
-	static class Ingredient {
-
-		String name;
-
-		int capacity;
-		int durability;
-		int flavor;
-		int texture;
-		int calories;
-
-		@Override
-		public String toString() {
-			return name;
-		}
-	}
-
 }
