@@ -13,16 +13,15 @@ public class Day18 {
 
 		boolean[][] matrix = read("18.txt");
 
-		// System.out.println("Inital state:");
-		// print(matrix);
-
-		// System.out.println(newValue(matrix, 4, 1));
+		// Step 2
+		turnCornersOn(matrix);
 
 		int steps = 100;
 		for (int i = 0; i < steps; i++) {
-			// System.out.println("\nAfter step " + (i + 1));
 			matrix = step(matrix);
-			// print(matrix);
+
+			// Step 2
+			turnCornersOn(matrix);
 		}
 
 		System.out.println(countLightsOn(matrix));
@@ -83,17 +82,6 @@ public class Day18 {
 		return (currentOn && neighborsOn == 2 || neighborsOn == 3) || (!currentOn && neighborsOn == 3);
 	}
 
-	private static void print(boolean[][] in) {
-
-		for (int i = 0; i < in.length; i++) {
-			for (int j = 0; j < in[i].length; j++) {
-				System.out.print((in[i][j] ? '#' : '.'));
-			}
-			System.out.println();
-		}
-
-	}
-
 	private static int countLightsOn(boolean[][] in) {
 		int count = 0;
 		for (int i = 0; i < in.length; i++) {
@@ -104,4 +92,10 @@ public class Day18 {
 		return count;
 	}
 
+	private static void turnCornersOn(boolean[][] in) {
+		in[0][0] = true;
+		in[0][in[0].length - 1] = true;
+		in[in.length - 1][0] = true;
+		in[in.length - 1][in[0].length - 1] = true;
+	}
 }
