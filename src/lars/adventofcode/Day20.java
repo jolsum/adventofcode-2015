@@ -7,8 +7,13 @@ public class Day20 {
 		for (int house = 1;; house++) {
 			int presents = 0;
 			for (int elf = 1; elf <= house; elf++) {
+				// Part 1
 				if (house % elf == 0) {
 					presents += elf * 10;
+				}
+				// Part 2
+				if (house <= elf * 50 && house % elf == 0) {
+					presents += elf * 11;
 				}
 			}
 
