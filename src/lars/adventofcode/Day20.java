@@ -16,7 +16,7 @@ public class Day20 {
 				System.out.println("House " + house + " got " + presents + " presents");
 			}
 
-			if (presents == 29000000) {
+			if (presents >= 29000000) {
 				System.out.println("House " + house + " got " + presents + " presents");
 				break;
 			}
