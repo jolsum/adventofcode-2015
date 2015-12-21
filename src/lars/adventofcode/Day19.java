@@ -5,42 +5,46 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class Day19 {
 
 	private static final List<Replacement> replacements = new ArrayList<>();
 
-	private static final Set<String> newMolecules = new HashSet<>();
-
 	public static void main(String[] args) throws IOException {
 
 		String start = read(new File("input", "19.txt"));
 
-		findMolecules(start);
-
-		System.out.println(newMolecules.size());
+		findMolecules(start, 0);
 	}
 
-	private static void findMolecules(String start) {
+	private static void findMolecules(String start, int steps) {
 
 		for (Replacement r : replacements) {
-			doReplacements(start, r);
+			List<String> newMolecules = doReplacements(start, r);
+			for (String newMolecule : newMolecules) {
+				if (newMolecule.equals("e")) {
+					System.out.println("Found transition in " + (steps + 1) + " steps");
+					System.exit(0);
+				}
+				findMolecules(newMolecule, steps + 1);
+			}
 		}
 
 	}
 
-	private static void doReplacements(String start, Replacement r) {
+	private static List<String> doReplacements(String start, Replacement r) {
+
+		List<String> newMolecules = new ArrayList<>();
 
 		int pos = 0;
-		while ((pos = start.indexOf(r.from, pos)) != -1) {
-			String newMolecule = start.substring(0, pos) + r.to + start.substring(pos + r.from.length());
+		while ((pos = start.indexOf(r.to, pos)) != -1) {
+			String newMolecule = start.substring(0, pos) + r.from + start.substring(pos + r.to.length());
 			newMolecules.add(newMolecule);
 			pos++;
 		}
 
+		return newMolecules;
 	}
 
 	private static String read(File file) throws IOException {
