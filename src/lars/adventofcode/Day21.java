@@ -17,6 +17,7 @@ public class Day21 {
 		weapons.add(new Item("Longsword", 40, 7, 0));
 		weapons.add(new Item("Greataxe", 74, 8, 0));
 
+		armors.add(new Item("-", 0, 0, 0));
 		armors.add(new Item("Leather", 13, 0, 1));
 		armors.add(new Item("Chainmail", 31, 0, 2));
 		armors.add(new Item("Splintmail", 53, 0, 3));
@@ -50,8 +51,6 @@ public class Day21 {
 							minPrice = price;
 						}
 						if (!win && price > maxPrice) {
-							System.out.println(weapon.name + " " + armor.name + " " + ring1.name + " " + ring2.name
-									+ " = " + price);
 							maxPrice = price;
 						}
 					}
