@@ -19,20 +19,21 @@ public class Day21 {
 
 		armors.add(new Item("Leather", 13, 0, 1));
 		armors.add(new Item("Chainmail", 31, 0, 2));
-		armors.add(new Item("Splintmail", 53, 1, 3));
-		armors.add(new Item("Bandedmail", 75, 1, 4));
-		armors.add(new Item("Platemail", 102, 1, 5));
+		armors.add(new Item("Splintmail", 53, 0, 3));
+		armors.add(new Item("Bandedmail", 75, 0, 4));
+		armors.add(new Item("Platemail", 102, 0, 5));
 
 		rings.add(new Item("-", 0, 0, 0));
 		rings.add(new Item("-", 0, 0, 0));
 		rings.add(new Item("Damage+1", 25, 1, 0));
-		rings.add(new Item("Damage+1", 50, 2, 0));
-		rings.add(new Item("Damage+1", 100, 3, 0));
+		rings.add(new Item("Damage+2", 50, 2, 0));
+		rings.add(new Item("Damage+3", 100, 3, 0));
 		rings.add(new Item("Defense+1", 20, 0, 1));
 		rings.add(new Item("Defense+2", 40, 0, 2));
 		rings.add(new Item("Defense+3", 80, 0, 3));
 
 		int minPrice = Integer.MAX_VALUE;
+		int maxPrice = Integer.MIN_VALUE;
 		for (Item weapon : weapons) {
 			for (Item armor : armors) {
 				for (Item ring1 : rings) {
@@ -44,15 +45,22 @@ public class Day21 {
 						int meArmor = armor.armor + ring1.armor + ring2.armor;
 						int price = weapon.cost + armor.cost + ring1.cost + ring2.cost;
 
-						if (play(100, meDamage, meArmor, 109, 8, 2) && price < minPrice) {
+						boolean win = play(100, meDamage, meArmor, 109, 8, 2);
+						if (win && price < minPrice) {
+							minPrice = price;
+						}
+						if (!win && price > maxPrice) {
 							System.out.println(weapon.name + " " + armor.name + " " + ring1.name + " " + ring2.name
 									+ " = " + price);
-							minPrice = price;
+							maxPrice = price;
 						}
 					}
 				}
 			}
 		}
+
+		System.out.println("Min price: " + minPrice);
+		System.out.println("Max price: " + maxPrice);
 
 	}
 
