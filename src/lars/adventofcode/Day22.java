@@ -98,11 +98,8 @@ public class Day22 {
 
 			// Could not afford any spell, but need to continue anyway
 			if (!spellCast) {
-				//				System.exit(0);
-				if (debug) {
-					System.out.println("Player does nothing\n");
-				}
-				play(false, meHitPoints, meMana, meArmor, new HashMap<>(items), bossHitPoints, bossDamage, manaSpent);
+				System.out.println("Loss, can't afford spell, mana " + meMana + "\n");
+				return;
 			}
 		}
 		else {
