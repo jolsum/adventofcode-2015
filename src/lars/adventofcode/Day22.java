@@ -3,8 +3,10 @@ package lars.adventofcode;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public class Day22 {
 
@@ -28,16 +30,20 @@ public class Day22 {
 
 	private static void play(final boolean myTurn, int meHitPoints, int meMana, int meArmor, Map<Item, Integer> items, int bossHitPoints, int bossDamage, int manaSpent) {
 		if (debug) {
-			System.out.println("-- " + (myTurn ? "Player" : "Boss") + " turn --");
+			System.out.println("\n-- " + (myTurn ? "Player" : "Boss") + " turn -- " + items.size());
 			System.out.println("- Player has " + meHitPoints + " hit points, " + meArmor + " armor, " + meMana + " mana");
 			System.out.println("- Boss has " + bossHitPoints + " hit points");
 		}
 
 		// Apply effects
-		for (Item item : items.keySet()) {
+		Iterator<Entry<Item, Integer>> it = items.entrySet().iterator();
+		while (it.hasNext()) {
+			Entry<Item, Integer> entry = it.next();
+			Item item = entry.getKey();
+			Integer timer = entry.getValue();
 
 			if (debug) {
-				System.out.println(item.name + ", timer " + items.get(item));
+				System.out.println(item.name + ", " + item.damage + " damage; timer " + timer);
 			}
 
 			meMana += item.mana;
@@ -46,18 +52,18 @@ public class Day22 {
 			bossHitPoints -= item.damage;
 
 			// Decrease timer
-			int timer = items.get(item) - 1;
+			timer = timer - 1;
 			if (timer == 0) {
-				items.remove(item);
+				it.remove();
 			}
 			else {
-				items.put(item, timer);
+				entry.setValue(timer);
 			}
 		}
 
 		if (bossHitPoints <= 0) {
-			System.out.println("Win, manaSpent: " + manaSpent + "\n");
 			cheapestWin = Math.min(cheapestWin, manaSpent);
+			System.out.println("Win, manaSpent: " + manaSpent + " cheapest: " + cheapestWin);
 			return;
 		}
 
@@ -73,7 +79,7 @@ public class Day22 {
 
 				spellCast = true;
 				if (debug) {
-					System.out.println("Player casts " + item.name + " for " + item.instantDamage + " damage\n");
+					System.out.println("Player casts " + item.name + " for " + item.instantDamage + " damage");
 				}
 
 				int newMeHitPoints = meHitPoints + item.heal;
@@ -82,23 +88,29 @@ public class Day22 {
 				int newBossHitPoints = bossHitPoints - item.instantDamage;
 				int newManaSpent = manaSpent + item.cost;
 
-				Map<Item, Integer> newItems = new HashMap<>();
+				Map<Item, Integer> newItems = new HashMap<>(items);
 				if (item.turns > 0) {
 					newItems.put(item, item.turns);
 				}
 
 				if (newBossHitPoints <= 0) {
-					System.out.println("Win, manaSpent: " + newManaSpent + "\n");
 					cheapestWin = Math.min(cheapestWin, newManaSpent);
+					System.out.println("Win, manaSpent: " + newManaSpent + " cheapest: " + cheapestWin);
+					return;
+				}
+
+				if (newManaSpent > cheapestWin) {
 					return;
 				}
 
 				play(false, newMeHitPoints, newMeMana, newMeArmor, newItems, newBossHitPoints, bossDamage, newManaSpent);
 			}
 
-			// Could not afford any spell, but need to continue anyway
+			// Could not afford any spell -> lose
 			if (!spellCast) {
-				System.out.println("Loss, can't afford spell, mana " + meMana + "\n");
+				if (debug) {
+					System.out.println("Loss, can't afford spell, mana " + meMana);
+				}
 				return;
 			}
 		}
@@ -107,11 +119,13 @@ public class Day22 {
 			int damage = Math.max(bossDamage - meArmor, 1);
 			meHitPoints -= damage;
 			if (debug) {
-				System.out.println("Boss attacks for " + damage + " damage\n");
+				System.out.println("Boss attacks for " + damage + " damage");
 			}
 
 			if (meHitPoints <= 0) {
-				System.out.println("Loss, manaSpent: " + manaSpent + "\n");
+				if (debug) {
+					System.out.println("Loss, manaSpent: " + manaSpent);
+				}
 				return;
 			}
 
