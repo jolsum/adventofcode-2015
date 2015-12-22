@@ -35,6 +35,17 @@ public class Day22 {
 			System.out.println("- Boss has " + bossHitPoints + " hit points");
 		}
 
+		// Part 2; 953 < X < 1295,
+		if (myTurn) {
+			meHitPoints--;
+			if (meHitPoints <= 0) {
+				if (debug) {
+					System.out.println("Loss");
+				}
+				return;
+			}
+		}
+
 		// Apply effects
 		Iterator<Entry<Item, Integer>> it = items.entrySet().iterator();
 		while (it.hasNext()) {
@@ -99,6 +110,7 @@ public class Day22 {
 					return;
 				}
 
+				// Already spent more than the lowest - just stop
 				if (newManaSpent > cheapestWin) {
 					return;
 				}
